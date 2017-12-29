@@ -1,0 +1,13 @@
+= HelloWorld
+
+*request*
+
+operation::index[snippets='http-request']
+
+*response*
+
+operation::index[snippets='request-fields']
+
+operation::index[snippets='response-fields']
+
+include::{snippets}/index/curl-request.adoc[]
