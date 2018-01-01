@@ -1,13 +1,26 @@
-= HelloWorld
+= 备忘录接口说明
+相帅 <xiangshuai320@gmail.com>
+v1.0, 2017-51-31
+:toc:
+:imagesdir: assets/images
+:homepage: http://asciidoctor.org
 
-*request*
 
-operation::index[snippets='http-request']
 
-*response*
 
-operation::index[snippets='request-fields']
+== 背景
 
-operation::index[snippets='response-fields']
+== 基础信息
 
-include::{snippets}/index/curl-request.adoc[]
+== 接口说明
+
+=== getNote
+operation::getNote[]
+
+=== getNotes
+operation::getNotes[]
+
+=== index
+operation::index[]
+
+

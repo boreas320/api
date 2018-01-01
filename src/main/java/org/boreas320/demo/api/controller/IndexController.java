@@ -1,5 +1,6 @@
 package org.boreas320.demo.api.controller;
 
+import org.boreas320.demo.api.model.GetNoteInput;
 import org.boreas320.demo.api.model.Note;
 import org.boreas320.demo.api.model.Person;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,11 @@ public class IndexController {
         notes.add(new Note(new Date(), "c", "月报", 相帅));
         return notes;
 
+    }
+
+    @RequestMapping("/getNote")
+    public Note getNote(@RequestBody GetNoteInput getNoteInput) {
+        return new Note(new Date(), "a", "年报", new Person("相帅"));
     }
 
 }
