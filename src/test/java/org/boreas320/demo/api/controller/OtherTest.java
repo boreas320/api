@@ -1,5 +1,6 @@
 package org.boreas320.demo.api.controller;
 
+import org.boreas320.demo.api.model.GetNotesInput;
 import org.junit.Test;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 

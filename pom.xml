@@ -51,11 +51,13 @@
                     <execution>
                         <id>generate-docs</id>
                         <!--Using prepare-package allows the documentation to be included in the package.-->
-                        <phase>prepare-package</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
+                            <goal>http</goal>
                         </goals>
                         <configuration>
+                            <home>备忘录</home>
                             <backend>html</backend>
                             <doctype>book</doctype>
                         </configuration>

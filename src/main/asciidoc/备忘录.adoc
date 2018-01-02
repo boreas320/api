@@ -1,26 +1,35 @@
 = 备忘录接口说明
 相帅 <xiangshuai320@gmail.com>
 v1.0, 2017-51-31
-:toc:
+:toc: left
 :imagesdir: assets/images
 :homepage: http://asciidoctor.org
-
-
+//:sectanchors:
+:sectlinks:
 
 
 == 背景
 
 == 基础信息
+|===
+| 环境 | URL前缀
+
+| dev
+| http://api.xm.test.sankuai.com
+
+| release
+| https://api.neixin.cn
+|===
 
 == 接口说明
 
-=== getNote
+=== 获取备忘录
 operation::getNote[]
 
-=== getNotes
+=== 获取全部备忘录
 operation::getNotes[]
 
-=== index
-operation::index[]
+//=== index
+//operation::index[]
 
 

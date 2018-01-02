@@ -1,6 +1,7 @@
 package org.boreas320.demo.api.controller;
 
 import org.boreas320.demo.api.model.GetNoteInput;
+import org.boreas320.demo.api.model.GetNotesInput;
 import org.boreas320.demo.api.model.Note;
 import org.boreas320.demo.api.model.Person;
 import org.springframework.web.bind.annotation.RequestBody;

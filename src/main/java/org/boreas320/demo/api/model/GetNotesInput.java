@@ -1,4 +1,4 @@
-package org.boreas320.demo.api.controller;
+package org.boreas320.demo.api.model;
 
 import javax.validation.constraints.Size;
 
