@@ -6,7 +6,7 @@ v1.0, 2017-51-31
 :homepage: http://asciidoctor.org
 //:sectanchors:
 :sectlinks:
-
+:operation-request-fields-title: 请求体字段详解
 
 == 背景
 
@@ -24,10 +24,10 @@ v1.0, 2017-51-31
 == 接口说明
 
 === 获取备忘录
-operation::getNote[]
+operation::getNote[snippets='http-request,request-headers,request-fields,http-response,response-fields']
 
 === 获取全部备忘录
-operation::getNotes[]
+operation::getNotes[snippets='http-request,request-headers,request-fields,http-response,response-fields']
 
 //=== index
 //operation::index[]

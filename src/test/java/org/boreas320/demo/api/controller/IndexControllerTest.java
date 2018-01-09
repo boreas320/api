@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
+import org.springframework.restdocs.headers.HeaderDocumentation;
+import org.springframework.restdocs.headers.RequestHeadersSnippet;
 import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer;
@@ -101,21 +103,78 @@ public class IndexControllerTest {
         this.mockMvc = mockMvcBuilder.build();
     }
 
+    private FieldDescriptor[] note = new FieldDescriptor[]{
+            PayloadDocumentation.fieldWithPath("title").type(JsonFieldType.STRING).description("日报"),
+            PayloadDocumentation.fieldWithPath("cts").type(JsonFieldType.NUMBER).description("创建日期"),
+            PayloadDocumentation.fieldWithPath("content").type(JsonFieldType.STRING).description("内容"),
+            PayloadDocumentation.fieldWithPath("author.name").type(JsonFieldType.STRING).description("作者姓名")};
+
     @Test
     public void getNote() throws Exception {
-        ConstrainedFields getNoteInputFields = new ConstrainedFields(GetNoteInput.class);
         GetNoteInput getNoteInput = new GetNoteInput();
         getNoteInput.setId(123l);
 
-        RequestBuilder requestBuilder = RestDocumentationRequestBuilders.post("/mtinfo/getNote").contentType(MediaType.APPLICATION_JSON_UTF8).content(this.objectMapper.writeValueAsString(getNoteInput));
+        //请求体片段
+        RequestFieldsSnippet requestFieldsSnippet =
+                PayloadDocumentation
+                        .requestFields(
+                                PayloadDocumentation
+                                        .fieldWithPath("id")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("备忘录id"));
+        //响应体片段
+        ResponseFieldsSnippet responseFieldsSnippet =
+                PayloadDocumentation
+                        .responseFields(
+                                PayloadDocumentation
+                                        .fieldWithPath("title")
+                                        .type(JsonFieldType.STRING)
+                                        .description("日报"),
+                                PayloadDocumentation
+                                        .fieldWithPath("cts")
+                                        .type(JsonFieldType.NUMBER)
+                                        .description("创建日期"),
+                                PayloadDocumentation
+                                        .fieldWithPath("content")
+                                        .type(JsonFieldType.STRING)
+                                        .description("内容"),
+                                PayloadDocumentation
+                                        .fieldWithPath("author.name")
+                                        .type(JsonFieldType.STRING)
+                                        .description("作者姓名"));
+        //Header定义
+        RequestHeadersSnippet requestHeadersSnippet =
+                HeaderDocumentation
+                        .requestHeaders(
+                                HeaderDocumentation
+                                        .headerWithName("u")
+                                        .description("用户uid"),
+                                HeaderDocumentation
+                                        .headerWithName("uu")
+                                        .description("验证信息"),
+                                HeaderDocumentation
+                                        .headerWithName("al")
+                                        .description("altoken"));
+
+        //流式编程 mockMvc + requestBuilder -> resultActions + resultMatcher -> resultActions + resultHandler
+        //requestBuilder产生请求
+        RequestBuilder requestBuilder =
+                RestDocumentationRequestBuilders
+                        .post("/mtinfo/getNote")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(this.objectMapper.writeValueAsString(getNoteInput))
+                        .header("u", 6856967)
+                        .header("uu", "xxxx")
+                        .header("al", "ttttt");
+        //生成结果操作句柄
         ResultActions resultActions = mockMvc.perform(requestBuilder);
+
+        //resultMatcher用来判断请求结果是否满足测试要求,可配置多个
         ResultMatcher resultMatcher = MockMvcResultMatchers.status().isOk();
         resultActions = resultActions.andExpect(resultMatcher);
 
-        RequestFieldsSnippet requestFieldsSnippet = PayloadDocumentation.requestFields(getNoteInputFields.withPath("id").type(JsonFieldType.NUMBER).description("备忘录id"));
-        ResponseFieldsSnippet responseFieldsSnippet = PayloadDocumentation.responseFields(note);
-        RestDocumentationResultHandler resultHandler = MockMvcRestDocumentation.document("getNote",requestFieldsSnippet ,responseFieldsSnippet);
-
+        //resultHandler对请求及响应进行处理,主要用来打印日志生成文档
+        RestDocumentationResultHandler resultHandler = MockMvcRestDocumentation.document("getNote", requestHeadersSnippet, requestFieldsSnippet, responseFieldsSnippet);
         resultActions.andDo(resultHandler);
     }
 
@@ -141,11 +200,7 @@ public class IndexControllerTest {
     }
 
 
-    private FieldDescriptor[] note = new FieldDescriptor[]{
-            PayloadDocumentation.fieldWithPath("title").type(JsonFieldType.STRING).description("日报"),
-            PayloadDocumentation.fieldWithPath("cts").type(JsonFieldType.NUMBER).description("创建日期"),
-            PayloadDocumentation.fieldWithPath("content").type(JsonFieldType.STRING).description("内容"),
-            PayloadDocumentation.fieldWithPath("author.name").type(JsonFieldType.STRING).description("作者姓名")};
+
 
 
     private static class ConstrainedFields {
