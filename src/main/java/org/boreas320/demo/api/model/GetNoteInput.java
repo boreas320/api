@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
  * Created by hurricane on 2017/12/29.
  */
 public class GetNoteInput {
-    @Size(min = 1)
+
     private Long id;
 
     public Long getId() {

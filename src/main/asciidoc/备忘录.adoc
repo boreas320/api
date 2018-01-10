@@ -9,6 +9,9 @@ v1.0, 2017-51-31
 :operation-request-fields-title: 请求体字段详解
 
 == 背景
+https://wiki.sankuai.com/pages/viewpage.action?pageId=1283344665[产品说明]
+
+ad
 
 == 基础信息
 |===
@@ -27,9 +30,15 @@ v1.0, 2017-51-31
 operation::getNote[snippets='http-request,request-headers,request-fields,http-response,response-fields']
 
 === 获取全部备忘录
-operation::getNotes[snippets='http-request,request-headers,request-fields,http-response,response-fields']
+operation::getNotes[]
 
-//=== index
-//operation::index[]
+=== 备注说明
+include::备注.adoc[]
+
+
+
+
+
+
 
 

@@ -22,6 +22,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.restdocs.payload.*;
+import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -121,7 +122,8 @@ public class IndexControllerTest {
                                 PayloadDocumentation
                                         .fieldWithPath("id")
                                         .type(JsonFieldType.NUMBER)
-                                        .description("备忘录id"));
+                                        .description("备忘录id")
+                                        .attributes(Attributes.key("constraints").value("不能小于0")));
         //响应体片段
         ResponseFieldsSnippet responseFieldsSnippet =
                 PayloadDocumentation
@@ -198,9 +200,6 @@ public class IndexControllerTest {
     public void hello() throws Exception {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/mtinfo")).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcRestDocumentation.document("index", PayloadDocumentation.responseFields(PayloadDocumentation.fieldWithPath("hello").type(JsonFieldType.STRING).description("哈哈哈"))));
     }
-
-
-
 
 
     private static class ConstrainedFields {
