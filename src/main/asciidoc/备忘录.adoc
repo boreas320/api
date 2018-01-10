@@ -9,9 +9,8 @@ v1.0, 2017-51-31
 :operation-request-fields-title: 请求体字段详解
 
 == 背景
-https://wiki.sankuai.com/pages/viewpage.action?pageId=1283344665[产品说明]
+https://github.com/boreas320/api[产品说明]
 
-ad
 
 == 基础信息
 |===
