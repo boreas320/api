@@ -94,7 +94,7 @@ public class IndexControllerTest {
         //将webApplicationContext注册到mockMvc中,用以进行mock测试
         DefaultMockMvcBuilder mockMvcBuilder = MockMvcBuilders.webAppContextSetup(this.webApplicationContext);
 
-        //配置请求的contextPath,此处仅为了配置contextPath而创建了一个默认mockHttpServletRequestBuilder,详细说明在下面getNote方法中介绍
+        //配置请求的contextPath,此处仅为了配置contextPath而创建了一个默认mockHttpServletRequestBuilder,详细说明在下面getNotes方法中介绍
         MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.get(URI.create("http://neixin.cn"));
         mockHttpServletRequestBuilder.contextPath("/mtinfo");
         mockMvcBuilder.defaultRequest(mockHttpServletRequestBuilder);
@@ -186,11 +186,22 @@ public class IndexControllerTest {
         GetNotesInput getNotesInput = new GetNotesInput();
         getNotesInput.setSize(9);
 
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/mtinfo/getNotes").contentType(MediaType.APPLICATION_JSON_UTF8).content(this.objectMapper.writeValueAsString(getNotesInput))).
-                andExpect(MockMvcResultMatchers.status().isOk()).
-                andDo(MockMvcRestDocumentation.document("getNotes",
-                        PayloadDocumentation.requestFields(getNotesInputFields.withPath("size").description("列表长度")),
-                        PayloadDocumentation.responseFields().andWithPrefix("[].", note)
+        mockMvc.perform(RestDocumentationRequestBuilders
+                .post("/mtinfo/getNotes")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(this.objectMapper.writeValueAsString(getNotesInput)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].title").value("日报"))
+                .andDo(MockMvcRestDocumentation
+                        .document("getNotes",
+                                PayloadDocumentation
+                                        .requestFields(
+                                                getNotesInputFields
+                                                .withPath("size")
+                                                .description("列表长度")),
+                                PayloadDocumentation
+                                        .responseFields()
+                                        .andWithPrefix("[].", note)
                         )
                 );
     }
